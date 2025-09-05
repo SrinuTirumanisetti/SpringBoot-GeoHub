@@ -19,7 +19,6 @@ public class City {
     @JoinColumn(name = "countryId", referencedColumnName = "countryId")
     private Country country;
 
-    // Getters and Setters
     public int getCityId() {
         return cityId;
     }
