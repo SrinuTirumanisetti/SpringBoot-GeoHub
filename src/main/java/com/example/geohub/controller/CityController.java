@@ -1,58 +1,51 @@
-/*
- *
- * You can use the following import statements
- * 
- * import org.springframework.beans.factory.annotation.Autowired;
- * import org.springframework.web.bind.annotation.*;
- * import java.util.ArrayList;
- * 
- */
+package com.example.geohub.controller;
 
-// Write your code here
-
-package controller;
-
-import model.City;
-import service.CityJpaService;
+import com.example.geohub.model.City;
+import com.example.geohub.model.Country;
+import com.example.geohub.service.CityJpaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
+import java.util.List;
 
 @RestController
-@RequestMapping("/cities")
 public class CityController {
 
     @Autowired
     private CityJpaService cityService;
 
-    // Get all cities
-    @GetMapping
-    public ArrayList<City> getAllCities() {
+    // 6. GET /cities
+    @GetMapping("/cities")
+    public List<City> getAllCities() {
         return cityService.getAllCities();
     }
 
-    // Get city by ID
-    @GetMapping("/{id}")
-    public City getCityById(@PathVariable int id) {
-        return cityService.getCityById(id);
-    }
-
-    // Create new city
-    @PostMapping
+    // 7. POST /cities
+    @PostMapping("/cities")
     public City addCity(@RequestBody City city) {
-        return cityService.addCity(city);
+        return cityService.saveCity(city);
     }
 
-    // Update city
-    @PutMapping("/{id}")
-    public City updateCity(@PathVariable int id, @RequestBody City city) {
-        return cityService.updateCity(id, city);
+    // 8. GET /cities/{cityId}
+    @GetMapping("/cities/{cityId}")
+    public City getCityById(@PathVariable int cityId) {
+        return cityService.getCityById(cityId);
     }
 
-    // Delete city
-    @DeleteMapping("/{id}")
-    public void deleteCity(@PathVariable int id) {
-        cityService.deleteCity(id);
+    // 9. PUT /cities/{cityId}
+    @PutMapping("/cities/{cityId}")
+    public City updateCity(@PathVariable int cityId, @RequestBody City city) {
+        return cityService.updateCity(cityId, city);
+    }
+
+    // 10. DELETE /cities/{cityId}
+    @DeleteMapping("/cities/{cityId}")
+    public void deleteCity(@PathVariable int cityId) {
+        cityService.deleteCity(cityId);
+    }
+
+    // 11. GET /cities/{cityId}/country
+    @GetMapping("/cities/{cityId}/country")
+    public Country getCountryByCity(@PathVariable int cityId) {
+        return cityService.getCountryByCityId(cityId);
     }
 }

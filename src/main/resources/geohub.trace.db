@@ -1,0 +1,3 @@
+2025-09-22 02:01:08 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COUNTRY" not found (this database is empty); SQL statement:
+select country0_.country_id as country_1_1_, country0_.country_name as country_2_1_, country0_.currency as currency3_1_, country0_.latitude as latitude4_1_, country0_.longitude as longitud5_1_, country0_.population as populati6_1_ from country country0_ [42104-214]

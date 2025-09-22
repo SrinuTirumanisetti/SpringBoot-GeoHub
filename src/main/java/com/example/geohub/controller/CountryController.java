@@ -1,58 +1,44 @@
-/*
- *
- * You can use the following import statements
- * 
- * import org.springframework.beans.factory.annotation.Autowired;
- * import org.springframework.web.bind.annotation.*;
- * import java.util.ArrayList;
- * 
- */
+package com.example.geohub.controller;
 
-// Write your code here
-
-package controller;
-
-import model.Country;
-import service.CountryJpaService;
+import com.example.geohub.model.Country;
+import com.example.geohub.service.CountryJpaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
+import java.util.List;
 
 @RestController
-@RequestMapping("/countries")
 public class CountryController {
 
     @Autowired
     private CountryJpaService countryService;
 
-    // Get all countries
-    @GetMapping
-    public ArrayList<Country> getAllCountries() {
+    // 1. GET /countries
+    @GetMapping("/countries")
+    public List<Country> getAllCountries() {
         return countryService.getAllCountries();
     }
 
-    // Get country by ID
-    @GetMapping("/{id}")
-    public Country getCountryById(@PathVariable int id) {
-        return countryService.getCountryById(id);
-    }
-
-    // Create new country
-    @PostMapping
+    // 2. POST /countries
+    @PostMapping("/countries")
     public Country addCountry(@RequestBody Country country) {
-        return countryService.addCountry(country);
+        return countryService.saveCountry(country);
     }
 
-    // Update country
-    @PutMapping("/{id}")
-    public Country updateCountry(@PathVariable int id, @RequestBody Country country) {
-        return countryService.updateCountry(id, country);
+    // 3. GET /countries/{countryId}
+    @GetMapping("/countries/{countryId}")
+    public Country getCountryById(@PathVariable int countryId) {
+        return countryService.getCountryById(countryId);
     }
 
-    // Delete country
-    @DeleteMapping("/{id}")
-    public void deleteCountry(@PathVariable int id) {
-        countryService.deleteCountry(id);
+    // 4. PUT /countries/{countryId}
+    @PutMapping("/countries/{countryId}")
+    public Country updateCountry(@PathVariable int countryId, @RequestBody Country country) {
+        return countryService.updateCountry(countryId, country);
+    }
+
+    // 5. DELETE /countries/{countryId}
+    @DeleteMapping("/countries/{countryId}")
+    public void deleteCountry(@PathVariable int countryId) {
+        countryService.deleteCountry(countryId);
     }
 }

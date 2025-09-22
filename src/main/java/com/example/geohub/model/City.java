@@ -16,8 +16,19 @@ public class City {
     private String longitude;
 
     @ManyToOne
-    @JoinColumn(name = "countryId", referencedColumnName = "countryId")
+    @JoinColumn(name = "countryId", nullable = false)
     private Country country;
+
+    public City() {}
+
+    public City(int cityId, String cityName, long population, String latitude, String longitude, Country country) {
+        this.cityId = cityId;
+        this.cityName = cityName;
+        this.population = population;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.country = country;
+    }
 
     public int getCityId() {
         return cityId;

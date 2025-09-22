@@ -16,7 +16,17 @@ public class Country {
     private String latitude;
     private String longitude;
 
-    // Getters and Setters
+    public Country() {}
+
+    public Country(int countryId, String countryName, String currency, long population, String latitude, String longitude) {
+        this.countryId = countryId;
+        this.countryName = countryName;
+        this.currency = currency;
+        this.population = population;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
     public int getCountryId() {
         return countryId;
     }
