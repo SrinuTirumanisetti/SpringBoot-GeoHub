@@ -28,8 +28,12 @@ public class CountryJpaService implements CountryRepository {
     @Override
     public Country getCountryById(int countryId) {
         return countryJpaRepository.findById(countryId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Country not found"));
+                .orElseThrow(() -> {
+                    log.warn("Country with ID {} not found", countryId);
+                    return new ResponseStatusException(HttpStatus.NOT_FOUND, "Country not found");
+                });
     }
+
 
     @Override
     public Country updateCountry(int countryId, Country country) {
