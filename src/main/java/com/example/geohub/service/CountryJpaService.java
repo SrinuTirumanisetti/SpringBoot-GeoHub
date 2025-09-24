@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
 
 @Service
@@ -28,12 +29,8 @@ public class CountryJpaService implements CountryRepository {
     @Override
     public Country getCountryById(int countryId) {
         return countryJpaRepository.findById(countryId)
-                .orElseThrow(() -> {
-                    log.warn("Country with ID {} not found", countryId);
-                    return new ResponseStatusException(HttpStatus.NOT_FOUND, "Country not found");
-                });
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Country not found"));
     }
-
 
     @Override
     public Country updateCountry(int countryId, Country country) {
