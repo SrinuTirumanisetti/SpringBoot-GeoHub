@@ -2,50 +2,59 @@ package com.example.geohub.controller;
 
 import com.example.geohub.model.City;
 import com.example.geohub.model.Country;
-import com.example.geohub.service.CityJpaService;
+import com.example.geohub.repository.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
 
 @RestController
 public class CityController {
 
+    private final CityRepository cityRepository;
+
     @Autowired
-    private CityJpaService cityService;
-
-    // 6. GET /cities
-    @GetMapping("/cities")
-    public List<City> getAllCities() {
-        return cityService.getAllCities();
+    public CityController(CityRepository cityRepository) {
+        this.cityRepository = cityRepository;
     }
 
-    // 7. POST /cities
-    @PostMapping("/cities")
+    // API 6: GET /countries/cities
+    @GetMapping("/countries/cities")
+    public List<City> getCities() {
+        return cityRepository.getCities();
+    }
+
+    // API 7: POST /countries/cities
+    @PostMapping("/countries/cities")
     public City addCity(@RequestBody City city) {
-        return cityService.saveCity(city);
+        return cityRepository.addCity(city);
     }
 
-    // 8. GET /cities/{cityId}
-    @GetMapping("/cities/{cityId}")
-    public City getCityById(@PathVariable int cityId) {
-        return cityService.getCityById(cityId);
+    // API 8: GET /countries/cities/{cityId}
+    @GetMapping("/countries/cities/{cityId}")
+    public City getCity(@PathVariable int cityId) {
+        return cityRepository.getCityById(cityId);
     }
 
-    // 9. PUT /cities/{cityId}
-    @PutMapping("/cities/{cityId}")
-    public City updateCity(@PathVariable int cityId, @RequestBody City city) {
-        return cityService.updateCity(cityId, city);
+    // API 9: PUT /countries/cities/{cityId}
+    @PutMapping("/countries/cities/{cityId}")
+    public City updateCity(@PathVariable int cityId, @RequestBody City updates) {
+        return cityRepository.updateCity(cityId, updates);
     }
 
-    // 10. DELETE /cities/{cityId}
-    @DeleteMapping("/cities/{cityId}")
+    // API 10: DELETE /countries/cities/{cityId}
+    @DeleteMapping("/countries/cities/{cityId}")
     public void deleteCity(@PathVariable int cityId) {
-        cityService.deleteCity(cityId);
+        cityRepository.deleteCity(cityId);
+        // As per spec: return 204 by raising NO_CONTENT
+        throw new ResponseStatusException(HttpStatus.NO_CONTENT);
     }
 
-    // 11. GET /cities/{cityId}/country
+    // API 11: GET /cities/{cityId}/country
     @GetMapping("/cities/{cityId}/country")
-    public Country getCountryByCity(@PathVariable int cityId) {
-        return cityService.getCountryByCityId(cityId);
+    public Country getCountryOfCity(@PathVariable int cityId) {
+        return cityRepository.getCountryOfCity(cityId);
     }
 }

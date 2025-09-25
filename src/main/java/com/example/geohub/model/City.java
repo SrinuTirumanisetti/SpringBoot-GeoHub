@@ -8,20 +8,29 @@ public class City {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cityId")
     private int cityId;
 
+    @Column(name = "cityName")
     private String cityName;
-    private long population;
+
+    @Column(name = "population")
+    private Long population;
+
+    @Column(name = "latitude")
     private String latitude;
+
+    @Column(name = "longitude")
     private String longitude;
 
-    @ManyToOne
-    @JoinColumn(name = "countryId", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "countryId")   // matches column in your schema.sql
     private Country country;
 
     public City() {}
 
-    public City(int cityId, String cityName, long population, String latitude, String longitude, Country country) {
+    public City(int cityId, String cityName, Long population,
+                String latitude, String longitude, Country country) {
         this.cityId = cityId;
         this.cityName = cityName;
         this.population = population;
@@ -30,51 +39,21 @@ public class City {
         this.country = country;
     }
 
-    public int getCityId() {
-        return cityId;
-    }
+    public int getCityId() { return cityId; }
+    public void setCityId(int cityId) { this.cityId = cityId; }
 
-    public void setCityId(int cityId) {
-        this.cityId = cityId;
-    }
+    public String getCityName() { return cityName; }
+    public void setCityName(String cityName) { this.cityName = cityName; }
 
-    public String getCityName() {
-        return cityName;
-    }
+    public Long getPopulation() { return population; }
+    public void setPopulation(Long population) { this.population = population; }
 
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
-    }
+    public String getLatitude() { return latitude; }
+    public void setLatitude(String latitude) { this.latitude = latitude; }
 
-    public long getPopulation() {
-        return population;
-    }
+    public String getLongitude() { return longitude; }
+    public void setLongitude(String longitude) { this.longitude = longitude; }
 
-    public void setPopulation(long population) {
-        this.population = population;
-    }
-
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
-
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
-    }
+    public Country getCountry() { return country; }
+    public void setCountry(Country country) { this.country = country; }
 }
